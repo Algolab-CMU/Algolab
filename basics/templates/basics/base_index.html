@@ -1,0 +1,39 @@
+{% load staticfiles %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+    <div class="nav-wrapper">
+        <div class="logo">
+            <a href="#" class="brand-logo">AlgoLab</a>
+        </div>
+        <ul class="center hide-on-med-and-down">
+
+            <li class="search">
+                <div class="input-field">
+                    <input id="search" type="search">
+                    <label for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </li>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#" id="btn1">Button 1</a></li>
+                <li><a href="#">Button 2</a></li>
+                <li><a href="#">Button 3</a></li>
+            </ul>
+
+        </ul>
+    </div>
+</nav>
+{% block body_block %}{% endblock %}
+</body>
+</html>
+
+
