@@ -2,12 +2,27 @@
 
 [![Build Status](https://travis-ci.org/Algolab-CMU/Algolab.svg?branch=master)](https://travis-ci.org/Algolab-CMU/Algolab) (Don't worry about this for now) <br>
 
-To start, you must
+## Python2/3
+It requires quite a bit work to have python2 and python3 work together if your PC has python2 installed as the default version for python. If you do not know how have python2 and python3 work together, it is OK to use python2 instead.
+
+(I personally use [Pyenv](https://github.com/yyuu/pyenv) to manage different versions of python)
+
+# Installation
 * Install mysqlclient using pip
 * Install djangorestframework using pip
 * Install MySQL (using the tutorial online)
 * Add an account to your MySQL database with username='root' and password='root'
-* Create a database caused "AlgoLab" in MySQL
+* Create a database caused "AlgoLab" in MySQL (in mysql commandline, type CREATE DATABASE AlgoLab)
+
+After this, you should be able to
+```
+python manage.py runserver
+```
+then type
+```
+python manage.py migrate
+```
+to start working.
 
 ## Warning
 
