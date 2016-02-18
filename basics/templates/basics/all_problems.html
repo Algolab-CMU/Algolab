@@ -1,0 +1,29 @@
+{% extends 'basics/base_index.html' %}
+
+{% block body_block %}
+  <h1>All problems</h1>
+
+  <a href="{% url 'basics:add_problem' %}">Add a new problem!</a>
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Created at</th>
+      <th>Last modified at</th>
+      <th></th>
+    </tr>
+    {% for p in problemList %}
+    <tr>
+      <td>{{ p.id }}
+      <td>{{ p.title }}</td>
+      <td>{{ p.description }}</td>
+      <td>{{ p.init_time }}</td>
+      <td>{{ p.mod_time }}</td>
+      <td><a href="{{ p.view_link }}">View</a></td>
+      <td><a href="{{ p.edit_link }}">Edit</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

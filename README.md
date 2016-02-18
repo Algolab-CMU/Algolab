@@ -10,7 +10,7 @@ It requires quite a bit work to have python2 and python3 work together if your P
 # Installation
 * Install mysqlclient using pip
 * Install djangorestframework using pip
-* Install MySQL (using the tutorial online)
+* Install MySQL (using the tutorial online) (note that you need to install mysqlclient with pip to use Python 3)
 * Add an account to your MySQL database with username='root' and password='root'
 * Create a database caused "AlgoLab" in MySQL (in mysql commandline, type CREATE DATABASE AlgoLab)
 

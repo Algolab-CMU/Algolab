@@ -29,13 +29,13 @@ class Question(models.Model):
     author = models.ManyToManyField(User)
 
     def save(self, *args, **kwargs):
-        self.mod_date = datetime.now();
-        super(Notebook, self).save(*args, **kwargs);
+        self.mod_time = datetime.now();
+        super(Question, self).save(*args, **kwargs);
 
     def __str__(self):
         return self.title
 
-# In case we want multiple choice questions
+# Multiple choice to a question
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=MAX_TEXT_LENGTH)
@@ -45,7 +45,7 @@ class Choice(models.Model):
     def __str__(self):
         return self.text
 
-
+# Free response answer to a question
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=MAX_TEXT_LENGTH)
