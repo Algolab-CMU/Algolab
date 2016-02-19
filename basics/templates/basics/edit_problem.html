@@ -2,4 +2,10 @@
 
 {% block body_block %}
   <h1>Edit problem {{ id }}</h1>
+
+  <form action="{% url 'basics:edit_problem' id %}" method="post">
+    {% csrf_token %}
+    {{ formVar }}
+    <input type="submit" value="Submit">
+  </form>
 {% endblock %}
