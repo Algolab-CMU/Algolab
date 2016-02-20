@@ -141,3 +141,17 @@ if 'TRAVIS' in os.environ:
             'PORT':     '',
         }
     }
+
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 10
+}
+
+# Django Registration
+ACCOUNT_ACTIVATION_DAYS = 3;
+
+LOGIN_REDIRECT_URL = "/";
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
