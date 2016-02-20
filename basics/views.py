@@ -52,7 +52,7 @@ def edit_problem(request, suppliedId):
   # print("EDIT " + str(suppliedId))
   problem = Question.objects.get(pk=suppliedId)
   currProblemForm = ProblemForm({'title':problem.title, 'description':problem.description})
-  
+
   if request.method == 'POST':
     updatedProblemForm = ProblemForm(request.POST)
     if updatedProblemForm.is_valid():
@@ -79,3 +79,6 @@ def home(request, username):
      userprofile = UserProfile.objects.get(user__exact = username)
      #classes_enrolled = Class.objects.filter()
      return HttpResponse("This worked")
+
+def user_profile(request):
+    return HttpResponse("Nothing so far")
