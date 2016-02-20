@@ -3,26 +3,68 @@
 
 <html>
 <head>
+    {# CSS #}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/materialize.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://dl.dropbox.com/s/z1wgas259fxkess/style.css?dl=0"/>
+    {# JS #}
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-
-<nav>
-    <div class="nav-wrapper">
-        <div class="logo">
-            <a href="{% url 'basics:index' %}" class="brand-logo">AlgoLab</a>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'basics:index' %}">AlgoLab</a>
         </div>
-        <ul class="center hide-on-med-and-down">
 
-            <li class="search">
-                <div class="input-field">
-                    <input id="search" type="search">
-                    <label for="search"><i class="material-icons">search</i></label>
-                    <i class="material-icons">close</i>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="scanIncl">
                 </div>
+                <button type="submit" class="btn btn-default btn-nav-search">
+                    Search
+                </button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <img src="https://dl.dropbox.com/s/r560l4nufhuvi49/XdQULww6.png?dl=0"/>
+                        &nbsp;
+                        <li>{% trans "Hi," %} {{ user.username }}</li>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'basics:user_profile' %}">View profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="{% url 'auth_logout' %}">Log out</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                 <li><a href="{% url 'auth_login' %}" id="btn3">{% trans "Log in" %}</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--
             </li>
             <ul class="right hide-on-med-and-down">
               {% if user.is_authenticated %}
@@ -35,7 +77,7 @@
             </ul>
         </ul>
     </div>
-</nav>
+</nav> -->
 {% block content %}{% endblock %}
 </body>
 </html>
