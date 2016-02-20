@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 
 <html>
 <head>
@@ -12,7 +13,7 @@
 <nav>
     <div class="nav-wrapper">
         <div class="logo">
-            <a href="#" class="brand-logo">AlgoLab</a>
+            <a href="{% url 'basics:index' %}" class="brand-logo">AlgoLab</a>
         </div>
         <ul class="center hide-on-med-and-down">
 
@@ -24,16 +25,17 @@
                 </div>
             </li>
             <ul class="right hide-on-med-and-down">
-                <li><a href="#" id="btn1">Button 1</a></li>
-                <li><a href="#">Button 2</a></li>
-                <li><a href="#">Button 3</a></li>
+              {% if user.is_authenticated %}
+              <li>{% trans "Hi," %} {{ user.username }}</li>
+              <li><a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a></li>
+              {% else %}
+               <li><a href="{% url 'auth_login' %}" id="btn1">{% trans "Log in" %}</a></li>
+              {% endif %}
+                <li><a href="#">Contact </a></li>
             </ul>
-
         </ul>
     </div>
 </nav>
-{% block body_block %}{% endblock %}
+{% block content %}{% endblock %}
 </body>
 </html>
-
-

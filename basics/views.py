@@ -1,8 +1,5 @@
 from django.shortcuts import render
-
-# Create your views here.
-
-from django.shortcuts import render
+from django.contrib.auth.models import User, Group
 
 from .models import Question
 
