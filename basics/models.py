@@ -43,7 +43,7 @@ class Choice(models.Model):
     user_history = models.ManyToManyField(User)
 
     def __str__(self):
-        return self.text
+        return self.choice_text
 
 # Free response answer to a question
 class Answer(models.Model):
