@@ -1,6 +1,8 @@
 from datetime import datetime
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from basics.models import Tag, Question, Choice, Answer, Comment, UserProfile, Class
+from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 
 from .models import Question
@@ -72,3 +74,8 @@ def view_problem(request, suppliedId):
   print(currProblemValues)
 
   return render(request, 'basics/view_problem.html', {'id': suppliedId, 'fields': currProblemValues})
+
+def home(request, username):
+     userprofile = UserProfile.objects.get(user__exact = username)
+     #classes_enrolled = Class.objects.filter()
+     return HttpResponse("This worked")

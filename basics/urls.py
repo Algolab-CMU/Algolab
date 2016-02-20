@@ -4,6 +4,7 @@ from . import views
 
 app_name = 'basics'
 urlpatterns = [
+    url(r'^home$', views.home, name='home'),
     url(r'^$', views.index, name='index'),
     url(r'^accounts/', include('registration.backends.hmac.urls', namespace='registration')),
     url(r'^add_problem/', views.add_problem, name='add_problem'),
