@@ -13,10 +13,10 @@ def index(request):
 
 def add_problem(request):
   if request.method == 'POST':
-    ProblemForm = ProblemForm(request.POST)
-    if ProblemForm.is_valid():
+    newProblemForm = ProblemForm(request.POST)
+    if newProblemForm.is_valid():
       # process data in form.cleaned_data
-      formInput = ProblemForm.cleaned_data
+      formInput = newProblemForm.cleaned_data
       print(formInput)
       newProblem = Question(\
         title=formInput['title'],\
@@ -27,9 +27,9 @@ def add_problem(request):
       newProblem.save()
       return HttpResponseRedirect('/all_problems')
   else:
-    ProblemForm = ProblemForm()
+    newProblemForm = ProblemForm()
 
-  return render(request, 'basics/add_problem.html', {'formVar': ProblemForm})
+  return render(request, 'basics/add_problem.html', {'formVar': newProblemForm})
 
 def expandProblem(p):
   return {\
