@@ -1,0 +1,56 @@
+{% extends 'basics/base_index.html' %}
+
+{% block content %}
+{% if error_message %}
+  <p><strong> {{ error_message }} </strong></p>
+{% endif %}
+  <div class="row">
+    <h3> Hello, {{ user.username }} </h3>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <h4> Your classes: </h4> <br>
+      {% if not classes.count %}
+        You did not register for any classes.
+      {% else %}
+      <ul class="list-group">
+          <li class="list-group-item col-md-3">
+            <a href="#">
+              All classes
+            </a>
+          </li>
+          {% for class in classes %}
+          <li class="list-group-item col-md-3">
+            <a href="#">
+              {{ class }}
+            </a>
+          </li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    <div class="col-md-9">
+      <h4>Your recent activities:</h4> <br>
+        {% if not answers and not questions and not comments  %}
+          You have no recent activites, please study harder!
+        {% else %}
+        <p>You have made {{ questions.count|add:answers.count|add:comments.count }} activities recently </p>
+        <ul class="list-group">
+
+          {% for object in answers.all %}
+          <li class="list-group-item col-md-9 activity-item">
+              You answered a question at {{ object.mod_time }}
+          </li>
+          {% endfor %}
+          {% for object in user.question_set.all %}
+          <li class="list-group-item col-md-9 activity-item">
+              You edited a question at {{ object.mod_time }}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+  </div>
+
+{% endblock %}
