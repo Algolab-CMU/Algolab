@@ -37,7 +37,6 @@
         {% else %}
         <p>You have made {{ questions.count|add:answers.count|add:comments.count }} activities recently </p>
         <ul class="list-group">
-
           {% for object in answers.all %}
           <li class="list-group-item col-md-9 activity-item">
               You answered a question at {{ object.mod_time }}

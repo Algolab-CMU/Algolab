@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'basics.apps.BasicsConfig',
     'rest_framework',
+    'friendship',
 ]
 
 MIDDLEWARE_CLASSES = [
