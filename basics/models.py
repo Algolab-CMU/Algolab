@@ -18,6 +18,8 @@ class Tag(models.Model):
 class Question(models.Model):
     title = models.CharField(max_length=MAX_TITLE_LENGTH)
     description = models.CharField(max_length=MAX_TEXT_LENGTH)
+    problemType = models.CharField(max_length=MAX_TEXT_LENGTH)
+    choices = models.ChoiceField(widget=forms.RadioSelect)
     init_time = models.DateTimeField('time created')
     mod_time = models.DateTimeField('time last modified')
     status = models.BooleanField() # whether it has been reviewed by staff member

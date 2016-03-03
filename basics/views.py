@@ -7,6 +7,8 @@ from django.contrib.auth.models import User, Group
 
 from .models import Question
 from .forms import ProblemForm
+from .forms import MULTIPLE_CHOICE
+from .forms import FREE_RESPONSE
 
 def index(request):
   return render(request, 'basics/base_index.html', {})
@@ -18,14 +20,32 @@ def add_problem(request):
       # process data in form.cleaned_data
       formInput = newProblemForm.cleaned_data
       print(formInput)
-      newProblem = Question(\
-        title=formInput['title'],\
-        description=formInput['description'],\
-        init_time=datetime.now(),\
-        mod_time=datetime.now(),\
-        status=False)
-      newProblem.save()
-      return HttpResponseRedirect('/all_problems')
+
+      if formInput['problemType'] == MULTIPLE_CHOICE:
+        newProblem = Question(\
+          title=formInput['title'],\
+          description=formInput['description'],\
+          problemType=formInput['problemType'],\
+          choices=formInput['choices'],\
+          init_time=datetime.now(),\
+          mod_time=datetime.now(),\
+          status=False)
+        newProblem.save()
+        return HttpResponseRedirect('/all_problems')
+      elif formInput['problemType'] == FREE_RESPONSE:
+        newProblem = Question(\
+          title=formInput['title'],\
+          description=formInput['description'],\
+          problemType=formInput['problemType'],\
+          
+          init_time=datetime.now(),\
+          mod_time=datetime.now(),\
+          status=False)
+        newProblem.save()
+        return HttpResponseRedirect('/all_problems')
+      else:
+        print("Unrecognized question problemType " + formInput['problemType'])
+        return HttpResponseRedirect('/all_problems')
   else:
     newProblemForm = ProblemForm()
 
