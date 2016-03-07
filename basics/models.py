@@ -24,11 +24,9 @@ class Question(models.Model):
     mod_time = models.DateTimeField('time last modified')
     status = models.BooleanField() # whether it has been reviewed by staff member
     starting_code = models.CharField(max_length=MAX_CODE_LENGTH, null=True)
-    # Where we want to insert the answer back to the code
-    answer_index = models.IntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(MAX_CODE_LENGTH)], null=True)
+    makefile = models.CharField(max_length=MAX_CODE_LENGTH, default='')
     tag = models.ManyToManyField(Tag)
-    author = models.ManyToManyField(User)
+    contributer = models.ManyToManyField(User)
 
     def save(self, *args, **kwargs):
         self.mod_time = datetime.now();
@@ -53,16 +51,15 @@ class Answer(models.Model):
     text = models.CharField(max_length=MAX_TEXT_LENGTH)
     correctness = models.NullBooleanField()
     mod_time = models.DateTimeField('time last modified')
-    vote = models.IntegerField()
     contributer = models.ManyToManyField(User)
 
 class Comment(models.Model):
     text = models.CharField(max_length=MAX_TEXT_LENGTH)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     mod_time = models.DateTimeField('time last modified')
-    parent = models.ForeignKey('self', null=True, blank=True) # whether this feed is a follow-up feed
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name="answer", default=1)
-    choice = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name="choice", default=1)
+    parent = models.ForeignKey('self', default=1) # whether this feed is a follow-up feed
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, default=1)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE, default=1)
 
 class UserProfile(models.Model):
     realname = models.CharField(max_length=MAX_TITLE_LENGTH)
@@ -79,3 +76,9 @@ class Class(models.Model):
     instructor = models.ManyToManyField(User, related_name="instructors")
     student = models.ManyToManyField(User, related_name="students")
     description = models.CharField(max_length=MAX_TEXT_LENGTH, default="")
+
+class Vote(models.Model):
+    voter = models.ForeignKey(User, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    up = models.NullBooleanField()
+    mod_time = models.DateTimeField('time voted')

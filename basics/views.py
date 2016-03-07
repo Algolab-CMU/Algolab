@@ -2,8 +2,11 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from basics.models import Tag, Question, Choice, Answer, Comment, UserProfile, Class
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
+
+from itertools import chain
 
 from .models import Question
 from .forms import ProblemForm
@@ -41,6 +44,8 @@ def add_problem(request):
           init_time=datetime.now(),\
           mod_time=datetime.now(),\
           status=False)
+        newProblem.save()
+        newProblem.author.add(request.user)
         newProblem.save()
         return HttpResponseRedirect('/all_problems')
       else:
@@ -82,6 +87,7 @@ def edit_problem(request, suppliedId):
       problem.title = formInput['title']
       problem.description = formInput['description']
       problem.mod_time = datetime.now()
+      problem.author.add(request.user)
       problem.save()
       return HttpResponseRedirect('/all_problems')
 
@@ -100,5 +106,14 @@ def home(request, username):
      #classes_enrolled = Class.objects.filter()
      return HttpResponse("This worked")
 
+@login_required(redirect_field_name='home')
 def user_profile(request):
-    return HttpResponse("Nothing so far")
+    userprofile = UserProfile.objects.filter(user = request.user.id)
+    user = request.user
+    questions = user.question_set.all().order_by('-mod_time')
+    answers = user.answer_set.all().order_by('-mod_time')
+    comments = user.comment_set.all().order_by('-mod_time')
+    classes = Class.objects.filter(student = request.user.id)
+    context = {'userprofile': userprofile, 'questions': questions,
+            'answers': answers, 'comments': comments, 'classes': classes, 'user': user}
+    return render(request, 'basics/user_profile.html', context)
