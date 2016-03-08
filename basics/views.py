@@ -88,7 +88,6 @@ def queue_add_problem_choices(request):
   if request.method == 'POST':
     choices_dict = request.POST.dict()
     # print(list(request.POST.lists()))
-    empty_entry = {'text':'','correctness':''}
     print(choices_dict)
 
     temp_dict = {}
@@ -101,9 +100,15 @@ def queue_add_problem_choices(request):
         choice_number = match_obj.group(1)
         field = match_obj.group(2)
         value = choices_dict[key]
+
+        if field == 'correctness':
+          if value == 'true':
+            value = True
+          else:
+            value = False
         # print(field, value)
         if choice_number not in temp_dict:
-          temp_dict[choice_number] = empty_entry
+          temp_dict[choice_number] = {'text':'','correctness':''}
         temp_dict[choice_number][field] = value
       else:
         print("key '"+key+"' did not match regexp")
@@ -112,6 +117,7 @@ def queue_add_problem_choices(request):
     for key in temp_dict:
       temp_list[int(key)] = temp_dict[key]
 
+    print(temp_dict)
     print(temp_list)
     question_choices_to_add[choices_dict['title']] = temp_list[::1]
     # TODO: push temp_dict into choices_to_add,
@@ -139,7 +145,6 @@ def all_problems(request):
   return render(request, 'basics/all_problems.html', {'problemList': allProblemsExpanded})
 
 def edit_problem(request, suppliedId):
-  # print("EDIT " + str(suppliedId))
   problem = Question.objects.get(pk=suppliedId)
   currProblemForm = ProblemForm({'title':problem.title, 'description':problem.description})
 
@@ -159,12 +164,13 @@ def edit_problem(request, suppliedId):
   return render(request, 'basics/edit_problem.html', {'id': suppliedId, 'formVar': currProblemForm})
 
 def view_problem(request, suppliedId):
-  # print ("VIEW " + str(suppliedId))
   problem = Question.objects.get(pk=suppliedId)
   currProblemValues = {'title':problem.title, 'description':problem.description}
+  currProblemChoices = Choice.objects.filter(question=Question.objects.get(title=problem.title))
   print(currProblemValues)
+  print(currProblemChoices)
 
-  return render(request, 'basics/view_problem.html', {'id': suppliedId, 'fields': currProblemValues})
+  return render(request, 'basics/view_problem.html', {'id': suppliedId, 'fields': currProblemValues, 'choices': currProblemChoices})
 
 def home(request, username):
      userprofile = UserProfile.objects.get(user__exact = username)
