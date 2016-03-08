@@ -5,6 +5,7 @@ from basics.models import Tag, Question, Choice, Answer, Comment, UserProfile, C
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
+import re
 
 from itertools import chain
 
@@ -12,6 +13,14 @@ from .models import Question
 from .forms import ProblemForm
 from .forms import MULTIPLE_CHOICE
 from .forms import FREE_RESPONSE
+
+# DEBUGGING USER -- RUN THIS ONCE
+# User.objects.create_user("testuser","test@test.com","testpassword")
+
+# TODO: Restrict users from making questions with the same title,
+# since this is used to identify the ajax call that sends the choices
+
+question_choices_to_add = {}
 
 def index(request):
   return render(request, 'basics/base_index.html', {})
@@ -29,12 +38,26 @@ def add_problem(request):
           title=formInput['title'],\
           description=formInput['description'],\
           problemType=formInput['problemType'],\
-          choices=formInput['choices'],\
+          # choices=formInput['choices'],\
           init_time=datetime.now(),\
           mod_time=datetime.now(),\
           status=False)
+
         newProblem.save()
-        return HttpResponseRedirect('/all_problems')
+        newProblem.contributer.add(request.user)
+        newProblem.save()
+
+        if formInput['title'] in question_choices_to_add:
+          for choice in question_choices_to_add[formInput['title']]:
+            newChoice = Choice(\
+              question=newProblem,\
+              choice_text=choice['text'],\
+              correctness=choice['correctness'])
+            newChoice.save();
+
+        print(Choice.objects.filter(question=newProblem))
+
+        # return HttpResponseRedirect('/all_problems')
       elif formInput['problemType'] == FREE_RESPONSE:
         newProblem = Question(\
           title=formInput['title'],\
@@ -44,17 +67,59 @@ def add_problem(request):
           init_time=datetime.now(),\
           mod_time=datetime.now(),\
           status=False)
+        # print(request)
+        # print(request.user)
         newProblem.save()
-        newProblem.author.add(request.user)
+        newProblem.contributer.add(request.user)
         newProblem.save()
-        return HttpResponseRedirect('/all_problems')
+        # return HttpResponseRedirect('/all_problems')
+
       else:
         print("Unrecognized question problemType " + formInput['problemType'])
-        return HttpResponseRedirect('/all_problems')
+        
+      return HttpResponseRedirect('/all_problems')
   else:
     newProblemForm = ProblemForm()
 
   return render(request, 'basics/add_problem.html', {'formVar': newProblemForm})
+
+
+def queue_add_problem_choices(request):
+  if request.method == 'POST':
+    choices_dict = request.POST.dict()
+    # print(list(request.POST.lists()))
+    empty_entry = {'text':'','correctness':''}
+    print(choices_dict)
+
+    temp_dict = {}
+
+    for key in choices_dict:
+      match_obj = re.match('.+\[(\d+)\]\[(.+)\]',key)
+      if match_obj:
+        # print(matchObj.group(1))
+        # print(matchObj.group(2))
+        choice_number = match_obj.group(1)
+        field = match_obj.group(2)
+        value = choices_dict[key]
+        # print(field, value)
+        if choice_number not in temp_dict:
+          temp_dict[choice_number] = empty_entry
+        temp_dict[choice_number][field] = value
+      else:
+        print("key '"+key+"' did not match regexp")
+
+    temp_list = [{} for key in temp_dict]
+    for key in temp_dict:
+      temp_list[int(key)] = temp_dict[key]
+
+    print(temp_list)
+    question_choices_to_add[choices_dict['title']] = temp_list[::1]
+    # TODO: push temp_dict into choices_to_add,
+    # and then add Choice objects inside add_problem
+
+    # print(Question.objects.filter(title=choices_dict['title']))
+    return HttpResponse("success")
+  return HttpResponse("failure")
 
 def expandProblem(p):
   return {\
@@ -70,7 +135,7 @@ def expandProblem(p):
 def all_problems(request):
   allProblems = Question.objects.all()
   allProblemsExpanded = [expandProblem(p) for p in allProblems]
-  print(allProblemsExpanded)
+  # print(allProblemsExpanded)
   return render(request, 'basics/all_problems.html', {'problemList': allProblemsExpanded})
 
 def edit_problem(request, suppliedId):

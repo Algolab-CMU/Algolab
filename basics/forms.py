@@ -14,4 +14,3 @@ class ProblemForm(forms.Form):
   title = forms.CharField(label="Problem title", max_length=MAX_TITLE_LENGTH)
   description = forms.CharField(label="Description", max_length=MAX_TEXT_LENGTH)
   problemType = forms.ChoiceField(label="Type", choices=typeChoices)
-  # how to make a field of a dynamic radiobutton list?
