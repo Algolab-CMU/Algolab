@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from basics.models import Tag, Question, Choice, Answer, Comment, UserProfile, Class
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
+from django.db.models import Q
 
 from .models import Question
 from .forms import ProblemForm
@@ -82,3 +83,17 @@ def home(request, username):
 
 def user_profile(request):
     return HttpResponse("Nothing so far")
+
+# search - navigation bar search request
+def search(request):
+  # Get the text from user input and parse it to list
+  searchContent = request.GET.get('search_text').lower()
+  searchTextList = searchContent.split()
+
+  # Search questions based on the title and user keywords
+  problems = []
+  for text in searchTextList:
+    problems += (Question.objects.filter(title__contains=text))
+  problems = [expandProblem(p) for p in problems]
+
+  return render(request, 'basics/search.html', {'problems' : problems, 'query' : searchContent})

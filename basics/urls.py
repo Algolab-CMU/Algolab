@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^all_problems/', views.all_problems, name='all_problems'),
     url(r'^problem/view/(?P<suppliedId>\d+)/$', views.view_problem, name='view_problem'),
     url(r'^problem/edit/(?P<suppliedId>\d+)/$', views.edit_problem, name='edit_problem'),
+    url(r'^search/', views.search, name='search')
 ]
