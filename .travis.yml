@@ -11,6 +11,7 @@ install:
     - travis_retry pip install mysqlclient
     - travis_retry pip install Django==$DJANGO
     - travis_retry pip install djangorestframework
+    - travis_retry pip install django-friendship
 before_script:
     - mysql -e 'create database travis_test;'
 script:

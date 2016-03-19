@@ -1,0 +1,43 @@
+{% extends 'basics/base_index.html' %}
+
+{% block content %}
+{% if error_message %}
+<p><strong> {{ error_message }} </strong></p>
+{% endif %}
+
+<div class="row">
+  <div class="col-md-3">
+    <h4> Setting </h4>
+    <hr>
+    <ul class="setting-list">
+      <li>Accounts</li>
+      <li>Email</li>
+      <li>Class</li>
+    </ul>
+  </div>
+  <div class="col-md-9">
+    <h4> Accounts </h4>
+    <hr>
+    <ul class="setting-list">
+      <li class="row">
+        <div class="col-md-2"> Email:</div>
+        <div class="col-md-4"> {{ user.email }} </div>
+      </li>
+      <li class="row">
+        <div class="col-md-2"> Password: </div>
+        <div class="col-md-4">
+          <a href="{% url 'auth_password_change' %}">Change password</a>
+        </div>
+      </li>
+      <li class="row">
+        <div class="col-md-2"> Logout: </div>
+        <div class="col-md-4">
+          <a href="{% url 'auth_logout' %}">Log out </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -2,15 +2,36 @@
 {% load i18n %}
 
 {% block content %}
-<form method="post" action=".">
-  <div class="mdl-cell--8-col mdl-grid" align="center">
-    {% csrf_token %}
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet" align="center">&nbsp;</div>
-    <div class="mdl-grid mdl-cell--4-col">
-    {{ form.as_p }}
-    </div>
-  </div>
+<h3 align="center"> Register a new account </h3>
+<div class="container" align="center">
+  <form method="post" action=".">
+    <div class="mdl-cell--8-col mdl-grid" align="center">
+      {% csrf_token %}
+      <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet" align="center">&nbsp;</div>
+      {{ form.non_field_errors }}
+      {% for field in form %}
+      <div class="fieldWrapper">
+        <div class="row">
+          <p class="col-sm-1 col-md-offset-3" align="left"> {{ field.label_tag }} </p>
+          <div class="col-md-3"> {{ field }} </div>
+            <div class="col-md-3" align = "left">
+              {% if field.errors %}
+              {% for error in field.errors %}
+              <p> {{error|escape}} </p>
+              {% endfor %}
+              {% else %}
+              <p> {{ field.help_text }} </p>
+              {% endif %}
+            </div>
+        </div>
 
-  <input type="submit" value="{% trans 'Submit' %}" />
-</form>
+      </div>
+      {% endfor %}
+
+      {{ form.non_field_errors }}
+    </div>
+
+    <input type="submit" value="{% trans 'Submit' %}" />
+  </form>
+</div>
 {% endblock %}

@@ -11,11 +11,8 @@
     <!-- css toolkit -->
     <link rel="stylesheet" tyep="text/css" href="https://www.dropbox.com/s/ngdapj5j86oc0ss/toolkit.css?dl=0"/>
     <!-- css for search -->
-    {# JS #}
-    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -55,7 +52,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'basics:user_profile' %}">View profile</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Settings</a></li>
+                        <li><a href="{% url 'basics:user_setting' %}">Settings</a></li>
                         <li><a href="{% url 'auth_logout' %}">Log out</a></li>
                     </ul>
                     </li>
@@ -71,5 +68,11 @@
 <div class="container">
     {% block content %}{% endblock %}
 </div>
+{# JS #}
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
