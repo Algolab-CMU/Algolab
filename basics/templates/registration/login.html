@@ -2,19 +2,43 @@
 {% load i18n %}
 
 {% block content %}
-    <form method="post" action=".">
-        <div class="mdl-cell--8-col mdl-grid" align="center">
-            {% csrf_token %}
-            <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet" align="center">&nbsp;</div>
-            <div class="mdl-grid mdl-cell--4-col">
-                {{ form.as_p }}
-            </div>
+
+<div class="row" >
+  <div class="col-md-5 col-md-offset-4">
+  <form method="post" action=".">
+    <div class="mdl-cell--8-col mdl-grid">
+      {% csrf_token %}
+      <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet" align="left">&nbsp;</div>
+      <div class="mdl-grid mdl-cell--4-col">
+        {% for field in form %}
+        <div class="fieldWrapper">
+          <div class="row">
+            <p class="col-md-3" align="left"> {{ field.label_tag }} </p>
+            <div class="col-md-9"> {{ field }} </div>
+              <div class="col-md-4" align = "left">
+                {% if field.errors %}
+                {% for error in field.errors %}
+                <p> {{error|escape}} </p>
+                {% endfor %}
+                {% else %}
+                <p> {{ field.help_text }} </p>
+                {% endif %}
+              </div>
+          </div>
+
         </div>
+        {% endfor %}
+      </div>
+    </div>
 
-        <input type="submit" value="{% trans 'Log in' %}"/>
-        <input type="hidden" name="next" value="{{ next }}"/>
-    </form>
+    <input type="submit" value="{% trans 'Log in' %}"/>
+  <hr>
+    <div> {% for error in form.non_field_errors %} {{error}} {% endfor %}</div>
+    <input type="hidden" name="next" value="{{ next }}"/>
+  </form>
 
-    <p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a></p>
-    <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a></p>
+  <p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a></p>
+  <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a></p>
+</div>
+</div>
 {% endblock %}

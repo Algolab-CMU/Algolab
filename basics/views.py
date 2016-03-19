@@ -97,3 +97,15 @@ def user_profile(request):
     context = {'userprofile': userprofile, 'questions': questions,
             'answers': answers, 'comments': comments, 'classes': classes, 'user': user}
     return render(request, 'basics/user_profile.html', context)
+
+@login_required(redirect_field_name='home')
+def user_setting(request):
+    userprofile = UserProfile.objects.filter(user = request.user.id)
+    user = request.user
+    questions = user.question_set.all().order_by('-mod_time')
+    answers = user.answer_set.all().order_by('-mod_time')
+    comments = user.comment_set.all().order_by('-mod_time')
+    classes = Class.objects.filter(student = request.user.id)
+    context = {'userprofile': userprofile, 'questions': questions,
+            'answers': answers, 'comments': comments, 'classes': classes, 'user': user}
+    return render(request, 'basics/user_setting.html', context)
