@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^accounts/profile', views.user_profile, name='user_profile'),
     url(r'^accounts/setting', views.user_setting, name='user_setting'),
     url(r'^add_problem/', views.add_problem, name='add_problem'),
+    url(r'^add_problem_choices/', views.queue_add_problem_choices, name='add_problem_choices'),
     url(r'^all_problems/', views.all_problems, name='all_problems'),
     url(r'^problem/view/(?P<suppliedId>\d+)/$', views.view_problem, name='view_problem'),
     url(r'^problem/edit/(?P<suppliedId>\d+)/$', views.edit_problem, name='edit_problem'),

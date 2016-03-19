@@ -5,4 +5,7 @@
 
   <p>Problem title: {{ fields.title }}</p>
   <p>Description: {{ fields.description }}</p>
+  {% for choice in choices %}
+    <div>Choice: {{ choice.choice_text }} (correct?: {{ choice.correctness }})</div>
+  {% endfor %}
 {% endblock %}

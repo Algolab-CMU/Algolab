@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -7,6 +8,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 MAX_TITLE_LENGTH = 200
 MAX_TEXT_LENGTH = 1000
 MAX_CODE_LENGTH = 1000
+
+from .forms import MULTIPLE_CHOICE
+from .forms import FREE_RESPONSE
 
 
 class Tag(models.Model):
@@ -18,6 +22,8 @@ class Tag(models.Model):
 class Question(models.Model):
     title = models.CharField(max_length=MAX_TITLE_LENGTH)
     description = models.CharField(max_length=MAX_TEXT_LENGTH)
+    problemType = models.CharField(max_length=MAX_TEXT_LENGTH, default=MULTIPLE_CHOICE)
+    choices = forms.ChoiceField(widget=forms.RadioSelect)
     init_time = models.DateTimeField('time created')
     mod_time = models.DateTimeField('time last modified')
     status = models.BooleanField() # whether it has been reviewed by staff member
