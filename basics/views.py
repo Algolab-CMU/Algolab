@@ -81,10 +81,12 @@ def view_problem(request, suppliedId):
 
   return render(request, 'basics/view_problem.html', {'id': suppliedId, 'fields': currProblemValues})
 
-def home(request, username):
-     userprofile = UserProfile.objects.get(user__exact = username)
-     #classes_enrolled = Class.objects.filter()
-     return HttpResponse("This worked")
+@login_required(redirect_field_name='home')
+def home(request):
+     userprofile = UserProfile.objects.filter(user = request.user.id)
+     allProblems = Question.objects.all()
+     allProblemsExpanded = [expandProblem(p) for p in allProblems]
+     return render(request, 'basics/home.html', {'userprofile': userprofile, 'problemList':allProblemsExpanded})
 
 @login_required(redirect_field_name='home')
 def user_profile(request):

@@ -1,0 +1,16 @@
+{% extends 'basics/base_index.html' %}
+
+{% block content %}
+  <h1>News</h1>
+   {% for p in problemList %}
+    <tr>
+      <td>{{ p.id }}
+      <td>{{ p.title }}</td>
+      <td>{{ p.description }}</td>
+      <td>{{ p.init_time }}</td>
+      <td>{{ p.mod_time }}</td>
+      <td><a href="{{ p.view_link }}">View</a></td>
+      <td><a href="{{ p.edit_link }}">Edit</a></td>
+    </tr>
+    {% endfor %}
+ {% endblock %}
