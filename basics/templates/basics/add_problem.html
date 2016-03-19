@@ -47,15 +47,14 @@
         });
         var filtered_zip = raw_zip.filter(function(e) {
           return !(/^\s*$/.test(e["text"]));
+          // keep only the choices that do not contain all whitespace
         });
-        // var filtered_zip_text
-
-        var data = {"choices": filtered_zip};
-        console.log(data);
-        // var data = {"choices":[{"text":"asdfasdfs","correctness":true},{"text":"fjdskla","correctness":false}]};
 
         // IF THE NAME OF THE TITLE FIELD CHANGES IN PYTHON, this will break
-        data["title"] = $("form#add_problem input[name='title']").val();
+        var data = {
+          "title": $("form#add_problem input[name='title']").val(),
+          "choices": filtered_zip
+        };
 
         $.post(add_problem_choices_url, data, function(response) {
           console.log(response);
