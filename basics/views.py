@@ -140,48 +140,10 @@ def expandProblem(p):
 
 
 def all_problems(request):
-
-    << << << < HEAD
-allProblems = Question.objects.all()
-allProblemsExpanded = [expandProblem(p) for p in allProblems]
-print(allProblemsExpanded)
-return render(request, 'basics/all_problems.html', {'problemList': allProblemsExpanded})
-
-
-def edit_problem(request, suppliedId):
-    # print("EDIT " + str(suppliedId))
-    problem = Question.objects.get(pk=suppliedId)
-    currProblemForm = ProblemForm({'title': problem.title, 'description': problem.description})
-
-    if request.method == 'POST':
-        updatedProblemForm = ProblemForm(request.POST)
-        if updatedProblemForm.is_valid():
-            # process data in form.cleaned_data
-            formInput = updatedProblemForm.cleaned_data
-            print(formInput)
-            problem.title = formInput['title']
-            problem.description = formInput['description']
-            problem.mod_time = datetime.now()
-            problem.author.add(request.user)
-            problem.save()
-            return HttpResponseRedirect('/all_problems')
-
-    return render(request, 'basics/edit_problem.html', {'id': suppliedId, 'formVar': currProblemForm})
-
-
-def view_problem(request, suppliedId):
-    # print ("VIEW " + str(suppliedId))
-    problem = Question.objects.get(pk=suppliedId)
-    currProblemValues = {'title': problem.title, 'description': problem.description}
-    print(currProblemValues)
-
-    return render(request, 'basics/view_problem.html', {'id': suppliedId, 'fields': currProblemValues})
-
-== == == =
-allProblems = Question.objects.all()
-allProblemsExpanded = [expandProblem(p) for p in allProblems]
-# print(allProblemsExpanded)
-return render(request, 'basics/all_problems.html', {'problemList': allProblemsExpanded})
+    allProblems = Question.objects.all()
+    allProblemsExpanded = [expandProblem(p) for p in allProblems]
+    # print(allProblemsExpanded)
+    return render(request, 'basics/all_problems.html', {'problemList': allProblemsExpanded})
 
 
 def edit_problem(request, suppliedId):
@@ -213,9 +175,6 @@ def view_problem(request, suppliedId):
 
     return render(request, 'basics/view_problem.html',
                   {'id': suppliedId, 'fields': currProblemValues, 'choices': currProblemChoices})
-
->> >> >> > 8
-cdf7a462c3c996a7ae471c38a3e5a1de436a5d9
 
 
 def home(request, username):
