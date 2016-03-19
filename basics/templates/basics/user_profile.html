@@ -5,12 +5,8 @@
   <p><strong> {{ error_message }} </strong></p>
 {% endif %}
   <div class="row">
-    <h3> Hello, {{ user.username }} </h3>
-  </div>
-
-  <div class="row">
     <div class="col-md-3">
-      <h4> Your classes: </h4> <br>
+      <h4>Classes </h4> <hr>
       {% if not classes.count %}
         You did not register for any classes.
       {% else %}
@@ -31,9 +27,9 @@
       {% endif %}
     </div>
     <div class="col-md-9">
-      <h4>Your recent activities:</h4> <br>
+      <h4>Activities</h4> <hr>
         {% if not answers and not questions and not comments  %}
-          You have no recent activites, please study harder!
+          You have no recent activites.
         {% else %}
         <p>You have made {{ questions.count|add:answers.count|add:comments.count }} activities recently </p>
         <ul class="list-group">
