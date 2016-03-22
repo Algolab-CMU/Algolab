@@ -15,3 +15,8 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
