@@ -1,65 +1,47 @@
 {% extends 'basics/base_index.html' %}
 
 {% block content %}
-    <div class="text-center">
-        <h3>Results for {{ query }}</h3>
-    </div>
-    <div class="by amt">
-        <div class="gc">
-            <div class="gn">
-                <div class="qv rc aog alu">
-                    <div class="qx"></div>
-                    <div class="qw dj">
-                        <h5 class="qy">
-                            <a class="aku" href="profile/index.html">Dave Gamache</a>
-                        </h5>
-                        <p class="alu">I wish i was a little bit taller, wish i was a baller, wish i had a
-                            girl…&nbsp;also.</p>
-                        <ul class="aoi">
-                            <li class="aoj">
-                                <a href="#userModal" class="aku" data-toggle="modal">
-                                    Friends
-                                    <h5 class="ali">12M</h5>
-                                </a>
-                            </li>
-
-                            <li class="aoj">
-                                <a href="#userModal" class="aku" data-toggle="modal">
-                                    Enemies
-                                    <h5 class="ali">1</h5>
-                                </a>
-                            </li>
-                        </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-inverse green">
+                    <div class="card-block">
+                        <h3 class="card-title">Welcome to Algolab</h3>
+                        <p class="card-text">if practice then progress</p>
                     </div>
+                </div>
+                <div class="card card-block">
+                    <h3 class="card-title">Top Questions</h3>
+                    <p class="card-text">
+                    <div class="list-group">
+                        <a class="list-group-item">
+                            <span class="label label-default label-pill pull-xs-right">14</span>
+                            Midterm
+                        </a>
+                        <a class="list-group-item">
+                            <span class="label label-default label-pill pull-xs-right">2</span>
+                            RangeLab
+                        </a>
+                        <a class="list-group-item">
+                            <span class="label label-default label-pill pull-xs-right">1</span>
+                            Dijkstra
+                        </a>
+                    </div>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h4>Results for <span class="label label-default">{{ query }}</span></h4>
+                <div class="list-group">
+                    {% for p in problems %}
+                        <a href="{{ p.view_link }}" class="list-group-item">
+                            {{ p.id }} &nbsp; <b>{{ p.title }}</b> &nbsp; {{ p.description }}
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 
-
-
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Created at</th>
-            <th>Last modified at</th>
-            <th></th>
-        </tr>
-        {% for p in problems %}
-            <tr>
-                <td>{{ p.id }}
-                <td>{{ p.title }}</td>
-                <td>{{ p.description }}</td>
-                <td>{{ p.init_time }}</td>
-                <td>{{ p.mod_time }}</td>
-                <td><a href="{{ p.view_link }}">View</a></td>
-                <td><a href="{{ p.edit_link }}">Edit</a></td>
-            </tr>
-        {% endfor %}
-    </table>
-
 {% endblock %}
-
-

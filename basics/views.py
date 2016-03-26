@@ -208,7 +208,6 @@ def user_setting(request):
                'answers': answers, 'comments': comments, 'classes': classes, 'user': user}
     return render(request, 'basics/user_setting.html', context)
 
-
 # search - navigation bar search request
 def search(request):
     # Get the text from user input and parse it to list
@@ -219,6 +218,6 @@ def search(request):
     problems = []
     for text in searchTextList:
         problems += (Question.objects.filter(title__contains=text))
+    problems = set(problems)
     problems = [expandProblem(p) for p in problems]
-
     return render(request, 'basics/search.html', {'problems': problems, 'query': searchContent})

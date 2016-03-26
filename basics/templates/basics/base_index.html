@@ -1,79 +1,71 @@
 {% load staticfiles %}
 {% load i18n %}
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token }}">
-    {# CSS #}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://dl.dropbox.com/s/z1wgas259fxkess/style.css?dl=0"/>
-    <!-- css toolkit -->
-    <link rel="stylesheet" tyep="text/css" href="https://www.dropbox.com/s/ngdapj5j86oc0ss/toolkit.css?dl=0"/>
-    <!-- css for search -->
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"
+          integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <!-- Customized CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
-<body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'basics:index' %}">AlgoLab</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left" role="search" action="{% url 'basics:search' %}" method="get">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="scanIncl" name="search_text">
-                </div>
-                <button type="submit" class="btn btn-default btn-nav-search" name="search_btn">
-                    Search
-                </button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
+<body class="body-color">
+<nav class="navbar navbar-light navbar-color">
+    <!-- Center the text in navbar -->
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'basics:index' %}">AlgoLab</a>
+        <form class="form-inline pull-xs-left" role="search" action="{% url 'basics:search' %}" method="get">
+            <input class="form-control" type="text" placeholder="15210" name="search_text">
+            <button class="btn btn-success-outline" type="submit" name="search_btn">Search</button>
+        </form>
+        <ul class="nav navbar-nav pull-xs-right">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Button1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Button2</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'basics:all_problems' %}">Problems</a>
+            </li>
+            <li class="nav-item">
                 {% if user.is_authenticated %}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            <img src="https://dl.dropbox.com/s/r560l4nufhuvi49/XdQULww6.png?dl=0"/>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" type="button" id="dropdownMenu1"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="https://dl.dropbox.com/s/r560l4nufhuvi49/XdQULww6.png?dl=0"
+                                 class="img-fluid pull-xs-left img-rounded" alt="Responsive image"/>
                             &nbsp;
-                    {{ user.username }}
-                    <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{% url 'basics:user_profile' %}">View profile</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{% url 'basics:user_setting' %}">Settings</a></li>
-                        <li><a href="{% url 'auth_logout' %}">Log out</a></li>
-                    </ul>
-                    </li>
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <a class="dropdown-item" href="{% url 'basics:user_profile' %}">View profile</a>
+                            <a class="dropdown-item" href="{% url 'basics:user_setting' %}">Settings</a>
+                            <a class="dropdown-item" href="{% url 'auth_logout' %}">Log out</a>
+                        </div>
+                    </div>
                 {% else %}
-                    <li><a href="{% url 'auth_login' %}" id="btn3">{% trans "Log in" %}</a></li>
+                    <a class="nav-link" href="{% url 'auth_login' %}" id="btn3">{% trans "Log in" %}</a>
                 {% endif %}
-                    <li><a href="{% url 'basics:all_problems' %}">Problems</a></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+            </li>
+        </ul>
+    </div>
 </nav>
 
 <div class="container">
     {% block content %}{% endblock %}
 </div>
-{# JS #}
-<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"
+        integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7"
         crossorigin="anonymous"></script>
-
 </body>
 </html>

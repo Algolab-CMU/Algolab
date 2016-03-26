@@ -1,17 +1,71 @@
+/*nav*/
+.navbar-color {
+    background-color: #FFF;
+    -webkit-box-shadow: 0px 1px 1px 0px rgba(179, 179, 179, 1);
+    -moz-box-shadow: 0px 1px 1px 0px rgba(179, 179, 179, 1);
+    box-shadow: 0px 1px 1px 0px rgba(179, 179, 179, 1);
+}
+
+.dropdown img {
+    margin: 0;
+    padding: 0;
+    height: 30px;
+    width: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.navbar {
+    margin-bottom: 3%;
+}
+.btn-success-outline {
+  color: #3fc380;
+  background-color: transparent;
+  background-image: none;
+  border-color: #3fc380;
+}
+.btn-success-outline:focus, .btn-success-outline.focus, .btn-success-outline:active, .btn-success-outline.active,
+.open > .btn-success-outline.dropdown-toggle {
+  color: #fff;
+  background-color: #3fc380;
+  border-color: #3fc380;
+}
+
+.btn-success-outline:hover {
+  color: #fff;
+  background-color: #3fc380;
+  border-color: #3fc380;
+}
+
+.btn-success-outline.disabled:focus, .btn-success-outline.disabled.focus, .btn-success-outline:disabled:focus, .btn-success-outline:disabled.focus {
+  border-color: #a3d7a3;
+}
+
+.btn-success-outline.disabled:hover, .btn-success-outline:disabled:hover {
+  border-color: #a3d7a3;
+}
+
+/* Content */
+.body-color {
+    background-color: #f5f5f5;
+}
+.green {
+    background-color: #3fc380;
+}
+
+/* Profile */
 .fieldWrapper {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .user_header {
-  margin-bottom: 20px;
-  margin-left: 10px;
+    margin-bottom: 20px;
+    margin-left: 10px;
 }
 
 .setting-list {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 .setting-list li {
-  margin-left: -40px;
-  margin-bottom: 5px;
+    margin-left: -40px;
+    margin-bottom: 5px;
 }
