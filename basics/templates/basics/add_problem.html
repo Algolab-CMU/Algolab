@@ -3,9 +3,63 @@
 {% block content %}
   <h1>Add new problem</h1>
 
-  <form action="{% url 'basics:add_problem' %}" method="post">
+  <form id="add_problem" action="{% url 'basics:add_problem' %}" method="post">
     {% csrf_token %}
     {{ formVar }}
     <input type="submit" value="Add">
   </form>
+
+  <div id="add_problem_choices">
+    <!-- <input class="choice" type="text"> -->
+    <a id="add_choice">Add choice</a>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      var empty_choice_HTML = '<input class="correctness" type="checkbox"><input class="choice" type="text"><br>';
+
+      $("div#add_problem_choices").prepend(empty_choice_HTML);
+      $("div#add_problem_choices a#add_choice").click(function() {
+        $("div#add_problem_choices a#add_choice").before(empty_choice_HTML);
+      })
+
+      function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", $("meta[name='csrf-token']").attr("content"));
+          }
+        }
+      });
+
+      var add_problem_choices_url = "{% url 'basics:add_problem_choices' %}";
+      $("form#add_problem input[type='submit']").click(function() {
+      // $("div#add_problem_choices a#add_choice").click(function() {
+        var raw_choices = $("div#add_problem_choices input.choice").toArray();
+        var raw_correctness = $("div#add_problem_choices input.correctness").toArray();
+        console.log(raw_choices);
+        console.log(raw_correctness);
+        var raw_zip = raw_choices.map(function(e,i) {
+          return {"text":e.value, "correctness":raw_correctness[i].checked};
+        });
+        var filtered_zip = raw_zip.filter(function(e) {
+          return !(/^\s*$/.test(e["text"]));
+          // keep only the choices that do not contain all whitespace
+        });
+
+        // IF THE NAME OF THE TITLE FIELD CHANGES IN PYTHON, this will break
+        var data = {
+          "title": $("form#add_problem input[name='title']").val(),
+          "choices": filtered_zip
+        };
+
+        $.post(add_problem_choices_url, data, function(response) {
+          console.log(response);
+        });
+      });
+    });
+  </script>
 {% endblock %}
