@@ -159,7 +159,7 @@ def edit_problem(request, suppliedId):
             problem.title = formInput['title']
             problem.description = formInput['description']
             problem.mod_time = datetime.now()
-            problem.author.add(request.user)
+            problem.contributer.add(request.user)
             problem.save()
             return HttpResponseRedirect('/all_problems')
 
