@@ -9,6 +9,7 @@ from .models import Question
 from .forms import ProblemForm
 from .forms import MULTIPLE_CHOICE
 from .forms import FREE_RESPONSE
+from .forms import ClassForm
 import re
 
 # DEBUGGING USER -- RUN THIS ONCE
@@ -222,3 +223,20 @@ def search(request):
     problems = set(problems)
     problems = [expandProblem(p) for p in problems]
     return render(request, 'basics/search.html', {'problems': problems, 'query': searchContent})
+
+#testing classes
+def all_classes(request):
+    title = "You are viewing all the classes and congrats you don't have any!"
+    context = {
+        "title" : title,
+    }
+    return render(request, "basics/all_classes.html", context)
+
+def create_class(request):
+    title = "Create a new class"
+    form = ClassForm
+    context = {
+        "title" : title,
+        "form" : form
+    }
+    return render(request, "basics/create_class.html", context)

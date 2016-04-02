@@ -14,3 +14,9 @@ class ProblemForm(forms.Form):
   title = forms.CharField(label="Problem title", max_length=MAX_TITLE_LENGTH)
   description = forms.CharField(label="Description", max_length=MAX_TEXT_LENGTH)
   problemType = forms.ChoiceField(label="Type", choices=typeChoices)
+
+
+class ClassForm(forms.Form):
+  classNumber = forms.CharField(label="Class number")
+  classTitle = forms.CharField(label="Class title")
+  classDescription = forms.CharField(label="Class description")
