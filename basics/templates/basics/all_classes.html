@@ -1,0 +1,7 @@
+{% extends 'basics/base_index.html' %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+
+  <a href="{% url 'basics:create_class' %}">Create a new class</a>
+{% endblock %}

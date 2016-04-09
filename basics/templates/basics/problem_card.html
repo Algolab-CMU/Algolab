@@ -1,0 +1,25 @@
+{% extends 'basics/search.html' %}
+
+{% block problem_card %}
+        <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created at</th>
+            <th>Last modified at</th>
+            <th></th>
+        </tr>
+        {% for p in problems %}
+            <tr>
+                <td>{{ p.id }}
+                <td>{{ p.title }}</td>
+                <td>{{ p.description }}</td>
+                <td>{{ p.init_time }}</td>
+                <td>{{ p.mod_time }}</td>
+                <td><a href="{{ p.view_link }}">View</a></td>
+                <td><a href="{{ p.edit_link }}">Edit</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

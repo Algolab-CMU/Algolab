@@ -1,0 +1,46 @@
+{% extends 'basics/base_index.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-inverse green">
+                    <div class="card-block">
+                        <h3 class="card-title">Welcome to Algolab</h3>
+                        <p class="card-text">if practice then progress</p>
+                    </div>
+                </div>
+                <div class="card card-block">
+                    <h3 class="card-title">Top Questions</h3>
+                    <p class="card-text">
+                    <div class="list-group">
+                        <a class="list-group-item">
+                            <span class="label label-default label-pill pull-xs-right">14</span>
+                            Midterm
+                        </a>
+                        <a class="list-group-item">
+                            <span class="label label-default label-pill pull-xs-right">2</span>
+                            RangeLab
+                        </a>
+                        <a class="list-group-item">
+                            <span class="label label-default label-pill pull-xs-right">1</span>
+                            Dijkstra
+                        </a>
+                    </div>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h4>Results for <span class="label label-default">{{ query }}</span></h4>
+                <div class="list-group">
+                    {% for p in problems %}
+                        <a href="{{ p.view_link }}" class="list-group-item">
+                            {{ p.id }} &nbsp; <b>{{ p.title }}</b> &nbsp; {{ p.description }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

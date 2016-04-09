@@ -1,0 +1,40 @@
+{% extends 'basics/base_index.html' %}
+
+{% block content %}
+  <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+               <div class="card card-block">
+                    <p class="card-text"> 
+                         <div class="list-group">
+                        <a class="list-group-item">
+                            Category 1
+                        </a>
+                        <a class="list-group-item">
+                            Category 2
+                        </a>
+                        <a class="list-group-item">
+                            Category 3
+                        </a>
+                    </div>
+                    </p>
+               </div>
+             </div>
+
+
+
+
+
+   <div class="col-md-9">
+   {% for p in problemList %}
+      <div class="feed-item">
+         <div class="text-holder">
+            <div class="feed-title">{{ p.title }} &#8226; {{ p.init_time }}</div>
+            <div class="feed-description">{{ p.description }} </div>
+         </div> <!--End of Text Holder-->
+       </div>
+    {% endfor %}
+  </div>
+
+
+ {% endblock %}
