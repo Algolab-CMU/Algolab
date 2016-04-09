@@ -44,7 +44,8 @@ def add_problem(request):
           status=False)
 
         newProblem.save()
-        newProblem.contributer.add(request.user)
+        # This will be None for Anonymous user
+        newProblem.contributer.add(request.user.id)
         newProblem.save()
 
         if formInput['title'] in question_choices_to_add:
@@ -70,7 +71,8 @@ def add_problem(request):
         # print(request)
         # print(request.user)
         newProblem.save()
-        newProblem.contributer.add(request.user)
+        # This will be None for Anonymous user
+        newProblem.contributer.add(request.user.id)
         newProblem.save()
         # return HttpResponseRedirect('/all_problems')
 
@@ -157,7 +159,7 @@ def edit_problem(request, suppliedId):
       problem.title = formInput['title']
       problem.description = formInput['description']
       problem.mod_time = datetime.now()
-      problem.author.add(request.user)
+      problem.contributer.add(request.user.id)
       problem.save()
       return HttpResponseRedirect('/all_problems')
 
